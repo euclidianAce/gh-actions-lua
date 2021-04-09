@@ -119,7 +119,7 @@ async function install_plain_lua(luaInstallPath, luaVersion) {
     cwd: luaExtractPath
   })
 
-  await exec.exec(`make -j INSTALL_TOP="${luaInstallPath.replace(/\\/g, "/")}" install`, undefined, {
+  await exec.exec(`make -j INSTALL_TOP="${luaInstallPath}" install`, undefined, {
     cwd: luaExtractPath
   })
 }
@@ -148,7 +148,7 @@ async function main() {
     luaVersion = VERSION_ALIASES[luaVersion]
   }
 
-  const luaInstallPath = path.join(process.cwd(), LUA_PREFIX)
+  const luaInstallPath = path.join(process.cwd(), LUA_PREFIX).replace(/\\/g, "/")
 
   // The tool cache is mostly useful on self-hosted runners. It doesn't persist across jobs in Github's runners
   let toolCacheDir = tc.find('lua', luaVersion)
