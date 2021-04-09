@@ -119,9 +119,7 @@ async function install_plain_lua(luaInstallPath, luaVersion) {
     cwd: luaExtractPath
   })
 
-  const installCmd = process.platform == "win32" ? 'INSTALL="cp -p" INSTALL_EXEC="cp -p" INSTALL_DATA="cp -p"' : ""
-
-  await exec.exec(`make -j INSTALL_TOP="${luaInstallPath}" ${installCmd} install`, undefined, {
+  await exec.exec(`make -j INSTALL_TOP="${luaInstallPath.replace(/\\/g, "/")}" install`, undefined, {
     cwd: luaExtractPath
   })
 }
