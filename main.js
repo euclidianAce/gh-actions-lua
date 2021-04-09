@@ -96,7 +96,7 @@ async function install_plain_lua(luaInstallPath, luaVersion) {
 
   if (isMacOS()) {
     await exec.exec("brew install readline ncurses")
-  } else {
+  } else if (process.platform == "linux") {
     await exec.exec("sudo apt-get install -q libreadline-dev libncurses-dev", undefined, {
       env: {
         DEBIAN_FRONTEND: "noninteractive",
@@ -105,7 +105,7 @@ async function install_plain_lua(luaInstallPath, luaVersion) {
     })
   }
 
-  const makefilePlatform = isMacOS() ? "macosx" : "linux"
+  const makefilePlatform = isMacOS() ? "macosx" : process.platform == "win32" ? "mingw" : "linux"
   const compileFlagsArray = [
     "-j",
     makefilePlatform,
