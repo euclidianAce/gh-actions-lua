@@ -122,12 +122,6 @@ async function install_plain_lua(luaInstallPath, luaVersion) {
   await exec.exec(`make -j INSTALL_TOP="${luaInstallPath}" install`, undefined, {
     cwd: luaExtractPath
   })
-
-  if (process.platform == "win32") {
-    await exec.exec("ln -s lua.exe lua", undefined, {
-      cwd: path.join(luaInstallPath, "bin")
-    })
-  }
 }
 
 async function install(luaInstallPath, luaVersion) {
